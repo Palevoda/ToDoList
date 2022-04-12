@@ -1,11 +1,39 @@
 
 
 <router-outlet></router-outlet>
+<div style = "width: 50%;margin:auto;text-align: center;padding: 50px;">
 
-    <input [formControl]="targetName" type="text">
-    <button (click)="createTarget()">Create</button>
+ 
+ 
 
+<mat-selection-list #todo [multiple]="false">
+    <mat-list-option *ngFor="let item of todoItems$ | async" [value]="item" [ngClass]="{completed: item.isCompleted}">
+        {{item.value}}
+    </mat-list-option>
+</mat-selection-list>
 
-<div *ngIf="todoItems$">
-    <p *ngFor="let item of todoItems$ | async">{{item.value}}</p>
+<div>
+<mat-form-field class="example-full-width" style="margin: 10px;" appearance="fill">
+    <mat-label>Edit target</mat-label>
+    <input [formControl]="newItemNameInput" matInput value="{{todo.selectedOptions.selected[0]?.value.value}}">
+</mat-form-field>
+<button mat-raised-button color="primary" style="margin: 10px;" (click)="saveChanges(todo.selectedOptions.selected[0]?.value.value)">Save changes</button>
+<button mat-raised-button color="primary" style="margin: 10px;" (click)="deleteItem(todo.selectedOptions.selected[0]?.value.value)">Delete target</button>
+<button mat-raised-button color="primary" style="margin: 10px;" (click)="completeTarget(todo.selectedOptions.selected[0]?.value.value)">Complete</button>
 </div>
+
+<div>
+<mat-form-field class="example-full-width" style="margin: 10px;" appearance="fill">
+    <mat-label>Add target</mat-label>
+    <input matInput [formControl]="targetName" type="text">
+</mat-form-field>
+<button mat-raised-button color="primary" style="margin: 10px;" (click)="createTarget()">Create</button>
+</div>
+
+</div>
+
+
+
+
+
+

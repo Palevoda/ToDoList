@@ -18,6 +18,8 @@ export class AppComponent {
 
   targetName: FormControl = new FormControl('');
 
+  newItemNameInput: FormControl = new FormControl('');
+
   todoItems$: Observable<ToDoItem[]> = this.$store.pipe(
     select(todoListSelector)
   );
@@ -37,5 +39,17 @@ export class AppComponent {
 
   createTarget() {
     this.storeService.createTarget(this.targetName.value);
+  }
+
+  saveChanges(oldName: string) {
+    this.storeService.changeTarget(oldName, this.newItemNameInput.value);
+  }
+
+  completeTarget(name: string) {
+    this.storeService.completeTarget(name);
+  }
+
+  deleteItem(name: string) {
+    this.storeService.deleteTarget(name);
   }
 }
