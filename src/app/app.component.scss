@@ -2,3 +2,20 @@
     text-decoration: line-through;
     color: gray;
 }
+
+.todo-board {
+    width: 50%;
+    margin:auto;
+    text-align: center;
+    padding: 50px;
+}
+.items {
+    position: sticky;
+    height: 350px;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.items::-webkit-scrollbar {
+    width: 0;
+}

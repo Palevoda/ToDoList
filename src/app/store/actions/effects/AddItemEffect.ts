@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Actions, ofType, createEffect, Effect } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { catchError, exhaustMap, map, mapTo, takeUntil, tap } from 'rxjs/operators';
-import { StorageService } from '../storage/storage.service';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { tap } from 'rxjs/operators';
+import { ToDoActions } from 'src/app/shared/enums/actions-enum';
+import { StoreService } from 'src/app/shared/services/store.service';
 @Injectable()
 export class ToDoCrudEffects {
   constructor(
     private actions$: Actions,
-    private storageService: StorageService
+    private storageService: StoreService
   ) {}
 
   createEffect$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType('[ToDo] Create target' as string),
+        ofType(ToDoActions.CreateTarget as string),
         tap(() => this.storageService.saveState())
       ),
     { dispatch: false }
@@ -23,7 +22,7 @@ export class ToDoCrudEffects {
   updateEffect$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType('[ToDo] Update Item' as string),
+        ofType(ToDoActions.UpdateTarget as string),
         tap(() => this.storageService.saveState())
       ),
     { dispatch: false }
@@ -32,7 +31,7 @@ export class ToDoCrudEffects {
   deleteEffect$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType('[ToDo] Delete Item' as string),
+        ofType(ToDoActions.DeleteTarget as string),
         tap(() => this.storageService.saveState())
       ),
     { dispatch: false }

@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
-import { toDoReducer } from './reducers/counter.reducer';
-import { StorageService } from './storage/storage.service';
+import { toDoReducer } from './store/actions/reducers/counter.reducer';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ToDoCrudEffects } from './effects/AddItemEffect';
+import { ToDoCrudEffects } from './store/actions/effects/AddItemEffect';
 import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { StoreService } from './shared/services/store.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatButtonModule,
   ],
-  providers: [StorageService, StoreModule],
+  providers: [StoreService, StoreModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

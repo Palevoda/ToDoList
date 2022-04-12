@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { dispatch } from 'rxjs/internal/observable/pairs';
-import { ToDoItem } from './models/item';
-import { ToDoState } from './models/todo-state';
-import { todoListSelector } from './selectors/items-selector';
-import { StorageService } from './storage/storage.service';
+import { Observable } from 'rxjs';
+import { Configurations } from './shared/enums/config';
+import { ToDoItem } from './shared/models/todo-item';
+import { StoreService } from './shared/services/store.service';
+import { todoListSelector } from './store/actions/selectors/items-selector';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +13,7 @@ import { StorageService } from './storage/storage.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'ngrx';
+  title = 'ToDO';
 
   targetName: FormControl = new FormControl('');
 
@@ -26,15 +25,11 @@ export class AppComponent {
 
   constructor(
     private $store: Store<ToDoItem[]>,
-    private storeService: StorageService
+    private storeService: StoreService
   ) {
     const storage = JSON.parse(
-      localStorage.getItem('to-do-list') || '{}'
+      localStorage.getItem(Configurations.LocalStorageName) || '{}'
     ) as ToDoItem[];
-
-    $store.pipe(select(todoListSelector)).subscribe((res) => {
-      console.log(res);
-    });
   }
 
   createTarget() {
